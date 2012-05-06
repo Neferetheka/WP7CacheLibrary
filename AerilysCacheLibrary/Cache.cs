@@ -7,6 +7,12 @@ namespace AerilysCacheLibrary
     public abstract class Cache
     {
         private static string directory = "Cache";
+        
+        /// <summary>
+        /// Permit to check if an item exists in cache
+        /// </summary>
+        /// <param name="key">key of the cached datas</param>
+        /// <returns>true if exists. false otherwise</returns>
         public static bool HasItem(string key)
         {
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
@@ -18,6 +24,11 @@ namespace AerilysCacheLibrary
             }
         }
 
+        /// <summary>
+        /// Get an item from the cache. 
+        /// </summary>
+        /// <param name="key">key of the cached datas</param>
+        /// <returns>Null if empty or expired. Datas as string otherwise</returns>
         public static string GetItem(string key)
         {
             try
@@ -61,6 +72,13 @@ namespace AerilysCacheLibrary
 
         }
 
+        /// <summary>
+        /// Put datas in cache
+        /// </summary>
+        /// <param name="key">key of the cached datas</param>
+        /// <param name="value">value as string that you want in cache</param>
+        /// <param name="timeToExpire">DateTime when the datas will expire</param>
+        /// <returns>true if okay, false otherwise</returns>
         public static bool SetItem(string key, string value, DateTime timeToExpire)
         {
             try
