@@ -1,0 +1,5 @@
+C:\Users\Galaad\Documents\Visual Studio 2010\Projects\Silverlight\Windows Phone\AerilysCacheLibrary\AerilysCacheLibrary\Bin\Debug\AerilysCacheLibrary.dll
+C:\Users\Galaad\Documents\Visual Studio 2010\Projects\Silverlight\Windows Phone\AerilysCacheLibrary\AerilysCacheLibrary\Bin\Debug\AerilysCacheLibrary.pdb
+C:\Users\Galaad\Documents\Visual Studio 2010\Projects\Silverlight\Windows Phone\AerilysCacheLibrary\AerilysCacheLibrary\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Galaad\Documents\Visual Studio 2010\Projects\Silverlight\Windows Phone\AerilysCacheLibrary\AerilysCacheLibrary\obj\Debug\AerilysCacheLibrary.dll
+C:\Users\Galaad\Documents\Visual Studio 2010\Projects\Silverlight\Windows Phone\AerilysCacheLibrary\AerilysCacheLibrary\obj\Debug\AerilysCacheLibrary.pdb
