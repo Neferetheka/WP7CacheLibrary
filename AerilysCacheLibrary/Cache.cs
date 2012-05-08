@@ -15,13 +15,27 @@ namespace AerilysCacheLibrary
         /// <returns>true if exists. false otherwise</returns>
         public static bool HasItem(string key)
         {
-            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+            if (store.FileExists(Path.Combine(directory, key)))
             {
-                if (store.FileExists(Path.Combine(directory, key)))
-                    return true;
-                else
+                string filePath = Path.Combine(directory, key);
+                string filePathCache = Path.Combine(directory, key + "cache");
+                DateTime toExpire;
+                using (StreamReader reader = new StreamReader(store.OpenFile(filePathCache, FileMode.Open, FileAccess.Read)))
+                {
+                    toExpire = DateTime.Parse(reader.ReadToEnd());
+                }
+
+                if (toExpire == null || DateTime.Now.CompareTo(toExpire) > 0)
+                {
+                    store.DeleteFile(filePath);
+                    store.DeleteFile(filePathCache);
                     return false;
+                }
+
+                return true;
             }
+            else
+                return false;
         }
 
         /// <summary>
