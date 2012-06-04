@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.IO.IsolatedStorage;
 
@@ -7,7 +7,7 @@ namespace AerilysCacheLibrary
     public abstract class Cache
     {
         private static string directory = "Cache";
-        
+
         /// <summary>
         /// Permit to check if an item exists in cache
         /// </summary>
@@ -15,27 +15,30 @@ namespace AerilysCacheLibrary
         /// <returns>true if exists. false otherwise</returns>
         public static bool HasItem(string key)
         {
-            if (store.FileExists(Path.Combine(directory, key)))
+            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                string filePath = Path.Combine(directory, key);
-                string filePathCache = Path.Combine(directory, key + "cache");
-                DateTime toExpire;
-                using (StreamReader reader = new StreamReader(store.OpenFile(filePathCache, FileMode.Open, FileAccess.Read)))
+                if (store.FileExists(Path.Combine(directory, key)))
                 {
-                    toExpire = DateTime.Parse(reader.ReadToEnd());
-                }
+                    string filePath = Path.Combine(directory, key);
+                    string filePathCache = Path.Combine(directory, key + "cache");
+                    DateTime toExpire;
+                    using (StreamReader reader = new StreamReader(store.OpenFile(filePathCache, FileMode.Open, FileAccess.Read)))
+                    {
+                        toExpire = DateTime.Parse(reader.ReadToEnd());
+                    }
 
-                if (toExpire == null || DateTime.Now.CompareTo(toExpire) > 0)
-                {
-                    store.DeleteFile(filePath);
-                    store.DeleteFile(filePathCache);
+                    if (toExpire == null || DateTime.Now.CompareTo(toExpire) > 0)
+                    {
+                        store.DeleteFile(filePath);
+                        store.DeleteFile(filePathCache);
+                        return false;
+                    }
+
+                    return true;
+                }
+                else
                     return false;
-                }
-
-                return true;
             }
-            else
-                return false;
         }
 
         /// <summary>
@@ -78,12 +81,10 @@ namespace AerilysCacheLibrary
                 }
 
             }
-
             catch
             {
                 return null;
             }
-
         }
 
         /// <summary>
